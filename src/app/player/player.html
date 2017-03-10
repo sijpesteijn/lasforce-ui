@@ -1,0 +1,8 @@
+<div>
+    <button (click)="firstFrame()"><i class="fa fa-fast-backward"></i></button>
+    <button (click)="prevFrame()"><i class="fa fa-backward"></i></button>
+    <button (click)="stop()" *ngIf="intervalSubscription"><i class="fa fa-stop"></i></button>
+    <button (click)="play()" *ngIf="!intervalSubscription"><i class="fa fa-play"></i></button>
+    <button (click)="nextFrame()"><i class="fa fa-forward" ></i></button>
+    <button (click)="lastFrame()"><i class="fa fa-fast-forward"></i></button>
+</div>

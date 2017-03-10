@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 
 export type InternalStateType = {
   [key: string]: any
@@ -33,4 +33,30 @@ export class AppState {
     // simple object clone
     return JSON.parse(JSON.stringify( object ));
   }
+}
+
+export class AppEvent {
+    constructor(private key: string, private value?: any) {}
+}
+
+export const TITLE = 'title';
+export const LOGOUT = 'logout';
+
+@Injectable()
+export class AppEventService {
+
+    private events: EventEmitter<AppEvent> = new EventEmitter<AppEvent>();
+
+    emit(event: AppEvent) {
+        this.events.emit(event);
+    }
+
+    subscribe(callback) {
+        return this.events.subscribe(callback);
+    }
+
+    takeUntil(callback) {
+        return this.events.takeUntil(callback);
+    }
+
 }

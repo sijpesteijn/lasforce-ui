@@ -1,0 +1,15 @@
+<header class="main-header">
+    <button class="button-container" (click)="toggleMenu($event)">
+        <i *ngIf="!showMenu" class="fa fa-bars"></i>
+        <i *ngIf="showMenu" class="fa fa-close"></i>
+    </button>
+
+    <h2>{{title}}</h2>
+
+    <div class="dropdown">
+        <button class="dropbtn"><i class="user fa fa-2x fa-user"></i></button>
+        <div class="dropdown-content">
+            <a href="#" [routerLink]="['/login']">Logout</a>
+        </div>
+    </div>
+</header>

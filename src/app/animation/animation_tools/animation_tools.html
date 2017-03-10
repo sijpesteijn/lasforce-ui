@@ -1,0 +1,22 @@
+<table>
+    <tr>
+        <td>
+            <button (click)="undo()"><i class="fa fa-undo"></i></button>
+        </td>
+        <td>
+            <button (click)="redo()"><i class="fa fa-repeat"></i></button>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <button (click)="selectTool('select')" [class.active]="selectedTool === 'select'">
+                <i class="fa fa-mouse-pointer"></i>
+            </button>
+        </td>
+        <td>
+            <button (click)="selectTool('line')" [class.active]="selectedTool === 'line'">
+                <i class="fa fa-pencil"></i>
+            </button>
+        </td>
+    </tr>
+</table>

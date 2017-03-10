@@ -31,6 +31,9 @@ import 'zone.js/dist/zone';
 
 // Typescript emit helpers polyfill
 import 'ts-helpers';
+require("font-awesome-webpack2");
+require('font-awesome/css/font-awesome.css');
+require('fabric/dist/fabric.js');
 
 if ('production' === ENV) {
   // Production

@@ -1,0 +1,11 @@
+<div [ngSwitch]="status">
+    <template [ngSwitchCase]="'loading'">
+        Loading animations
+        <spinner></spinner>
+    </template>
+    <template ngSwitchDefault>
+        <ul class="list">
+            <li class="selectable" *ngFor="let animation of animations" (click)="preview(animation.id)">{{animation.name}}</li>
+        </ul>
+    </template>
+</div>

@@ -2,18 +2,52 @@
 /* This file is for setting global styles  */
 @import 'variables';
 
-nav {
-  margin-top: 16px;
+html {
+  font-size: $font_size;
+  font-family: $font_family;
+  line-height: 1.15;
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
 }
 
-nav a {
-  background-color: $nav-button-color;
-  color: white;
-  padding: 8px 16px;
-  margin: 8px;
-  vertical-align: middle;
-  line-height: 1.25;
+body {
+  margin: 0;
+  background-color: $white;
+}
+
+.list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+button, .selectable {
+  cursor: pointer;
+}
+
+h1,
+h2,
+h3 {
+  margin: $font_size 0;
+}
+
+h2 {
+  font-size: $font_size*1.4;
+  width: 100%;
   text-align: center;
-  text-decoration: none;
-  border-radius: 4px;
+}
+
+button {
+  margin: 0;
+  text-transform: none;
+  background: $gray;
+  color: $white;
+  cursor: pointer;
+  border: none;
+  padding: $font_size/2;
+  font-size: $font_size;
+}
+
+button:hover {
+  background: $gray_hover;
 }

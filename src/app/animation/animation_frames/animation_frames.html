@@ -1,0 +1,12 @@
+<div [ngSwitch]="animation">
+    <template [ngSwitchCase]="undefined">
+        No animation selected
+    </template>
+    <template ngSwitchDefault>
+        <ul class="list">
+            <li class="selectable" [ngClass]="{ selected: animation?.current_frame === i}"
+                *ngFor="let frame of animation?.frames; let i = index"
+                (click)="loadFrame(i)">{{ frame.name }}</li>
+        </ul>
+    </template>
+</div>

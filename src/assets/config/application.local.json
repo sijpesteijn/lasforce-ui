@@ -1,0 +1,6 @@
+{
+  "animation" : {
+    "all" : "https://lasforce.dev/animations",
+    "get" : "https://lasforce.dev/animations/:id"
+  }
+}

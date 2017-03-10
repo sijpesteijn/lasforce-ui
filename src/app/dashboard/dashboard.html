@@ -1,0 +1,20 @@
+<div [ngGrid]="gridConfig" class="grid">
+    <div *ngFor="let widget of widgets|async ; let i = index" [(ngGridItem)]="widget.config"
+         (onItemChange)="updateItem(i, $event)"
+         (onResize)="onResize(i, $event)" (onDrag)="onDrag(i, $event)">
+        <div class="handle" *ngIf="gridConfig.show_header">
+            <div class="box-header-btns">
+                <a title="Remove widget" (click)="removeWidget(i);">
+                    <i class="fa fa-trash"></i>
+                </a>
+            </div>
+        </div>
+        <widget [component]='widget.component'></widget>
+    </div>
+</div>
+
+<!--<div [ngGrid]="gridConfig" class="grid">-->
+    <!--<div *ngFor='let widget of widgets | async' [(ngGridItem)]="widget.settings">-->
+        <!--<widget [component]='widget.component'></widget>-->
+    <!--</div>-->
+<!--</div>-->

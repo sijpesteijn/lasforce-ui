@@ -1,0 +1,5 @@
+<lasforce-header (navigationEvent)="onNavigationEvent($event)" [showMenu]="showMenu"></lasforce-header>
+<navigation *ngIf="showMenu" (onClose)="closeMenu($event)"></navigation>
+<main>
+    <router-outlet></router-outlet>
+</main>

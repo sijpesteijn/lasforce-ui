@@ -1,0 +1,27 @@
+@import '../../styles/variables';
+
+.grid {
+  //background-color: #00BCD4;
+  //border: 1px solid black;
+}
+
+.grid-item {
+  border: solid 1px $widget_border_color;
+  overflow: auto;
+}
+
+.handle {
+  width: 100%;
+  height: $gutter;
+  background: $widget_header_color;
+  color: black;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+.box-header-btns {
+  top: $gutter/4;
+  right: 10px;
+  cursor: pointer;
+  position: absolute;
+}
