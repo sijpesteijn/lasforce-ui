@@ -35,6 +35,10 @@ import { PlayerComponent } from './player/player.component';
 import { AuthGuard } from './security/authguard';
 import { AuthenticationService } from './security/authenticate.service';
 import { LoginComponent } from './login/login.component';
+import { TranslateI18NextModule } from 'angular2-i18next';
+import { LanguageDetectorService } from './i18n/language.detector.service';
+import { CustomTreeNodeComponent } from './tree-node/tree-node.component';
+import { PopoverModule } from 'ng2-bootstrap';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -69,15 +73,18 @@ if ('production' === ENV) {
     bootstrap   : [AppComponent],
     declarations: [
         AppComponent,
+        CustomTreeNodeComponent,
         LasforceHeaderComponent,
         NavigationComponent,
         NoContentComponent,
         LoginComponent
     ],
     imports     : [ // import Angular's modules
+        TranslateI18NextModule,
         BrowserModule,
         FormsModule,
         HttpModule,
+        PopoverModule.forRoot(),
         RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules })
     ],
     providers   : [ // expose our Services and Providers into Angular's dependency injection
@@ -87,7 +94,9 @@ if ('production' === ENV) {
         AuthGuard,
         AuthenticationService,
         AppEventService,
-        SettingsService
+        SettingsService,
+        LanguageDetectorService,
+        { provide: Window, useValue: window }
     ]
 })
 export class AppModule {

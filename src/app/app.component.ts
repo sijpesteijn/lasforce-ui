@@ -2,8 +2,8 @@ import {
     Component,
     ViewEncapsulation
 } from '@angular/core';
-
-declare var fabric: any;
+import { TranslateI18Next } from 'angular2-i18next';
+import { LanguageDetectorService } from './i18n/language.detector.service';
 
 @Component({
     selector     : 'app',
@@ -14,8 +14,14 @@ declare var fabric: any;
 export class AppComponent {
     private showMenu: boolean = false;
 
-    constructor() {
-        console.log(fabric.version);
+    constructor(private translateI18Next: TranslateI18Next,
+                private languageDetector: LanguageDetectorService) {
+        translateI18Next.init({
+            lng                    : 'nl',
+            fallbackLng            : 'nl',
+            browserLanguageDetector: languageDetector,
+            debug                  : false
+        });
     }
 
     onNavigationEvent($event) {

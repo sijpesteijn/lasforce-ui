@@ -6,6 +6,8 @@ export const ANIMATION_LAST_FRAME = 'animationLastFrame';
 export const ANIMATION_PREV_FRAME = 'animationPrevFrame';
 export const ANIMATION_FIRST_FRAME = 'animationFirstFrame';
 export const ANIMATION_FRAME_SELECTED = 'animationFrameSelected';
+export const ANIMATION_FRAME_OBJECT_SELECTED = 'animationFrameObjectSelected';
+export const ANIMATION_FRAME_OBJECT_DESELECTED = 'animationFrameObjectDeselected';
 
 export class DashboardEvent {
     constructor(private key: string, private value?: any) {}

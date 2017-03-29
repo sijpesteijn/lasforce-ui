@@ -1,0 +1,15 @@
+<div [ngSwitch]="animation">
+    <template [ngSwitchCase]="undefined">
+        No animation selected
+    </template>
+    <template ngSwitchDefault>
+        <tree-root
+                #tree
+                [nodes]="nodes"
+                [options]="options"
+                (onActivate)="onEvent($event)"
+                (onDeactivate)="onEvent($event)">
+                <!--<custom-tree-node [node]="node"></custom-tree-node>-->
+        </tree-root>
+    </template>
+</div>

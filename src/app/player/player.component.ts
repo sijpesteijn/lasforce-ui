@@ -31,7 +31,7 @@ export class PlayerComponent {
     play() {
         this.intervalSubscription = setInterval(() => {
             this.events.emit(new DashboardEvent(ANIMATION_NEXT_FRAME));
-        }, 500);
+        }, 0);
     }
 
     stop() {

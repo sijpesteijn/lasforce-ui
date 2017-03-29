@@ -11,6 +11,7 @@ import { DashboardMetadata } from './dashboard';
 })
 export class DashboardComponent implements OnInit {
     private widgets                = new BehaviorSubject([]);
+    private sharedService: any;
     private gridConfig: GridConfig = {
         margins        : [5],
         visible_cols   : 16,
@@ -41,6 +42,7 @@ export class DashboardComponent implements OnInit {
     ngOnInit() {
         this.route.data.subscribe((data: DashboardMetadata) => {
             this.gridConfig = this.overrideDefaults(data.gridConfig);
+            this.sharedService    = data.sharedService;
             this.widgets.next(data.widgetsMetadata)
         });
     }

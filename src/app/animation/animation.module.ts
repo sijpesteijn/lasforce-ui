@@ -12,25 +12,33 @@ import { AnimationListComponent } from './animation_list/animation_list.componen
 import { PlayerModule } from '../player/player.module';
 import { AnimationFramesComponent } from './animation_frames/animation_frames.component';
 import { SpinnerModule } from '../spinner/spinner.module';
+import { TreeModule } from 'angular-tree-component/dist/angular-tree-component';
+import { AnimationFrameComponent } from './animation_frame/animation_frame.component';
+import { PaperAnimationService } from './paper_animation.service';
+import { TranslateI18NextModule } from 'angular2-i18next';
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
+        TranslateI18NextModule,
         RouterModule,
         DashboardModule,
         PlayerModule,
         SpinnerModule,
+        TreeModule,
         RouterModule.forChild(ANIMATION_ROUTES)
     ],
     declarations: [
         AnimationFramesComponent,
+        AnimationFrameComponent,
         AnimationListComponent,
         AnimationCanvasComponent,
         AnimationToolsComponent
     ],
     providers: [
-        AnimationService
+        AnimationService,
+        PaperAnimationService
     ]
 })
 export class AnimationModule {

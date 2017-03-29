@@ -13,6 +13,7 @@ export interface WidgetMetadata {
 }
 
 export interface DashboardMetadata {
-    gridConfig: GridConfig
+    gridConfig: GridConfig;
+    sharedService: any;
     widgetsMetadata: WidgetMetadata[];
 }

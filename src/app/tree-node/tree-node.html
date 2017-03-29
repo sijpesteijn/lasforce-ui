@@ -1,0 +1,4 @@
+<template #treeNodeTemplate let-node="node" let-index="index" >
+    <input type="checkbox" [checked]="node.data.checked">
+    <span (click)="editMode=true">Name: {{node.name}}</span>
+</template>

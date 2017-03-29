@@ -6,6 +6,8 @@ import { AnimationListComponent } from './animation_list/animation_list.componen
 import { PlayerComponent } from '../player/player.component';
 import { AnimationFramesComponent } from './animation_frames/animation_frames.component';
 import { AuthGuard } from '../security/authguard';
+import { AnimationFrameComponent } from './animation_frame/animation_frame.component';
+import { PaperAnimationService } from './paper_animation.service';
 
 export const ANIMATION_ROUTES: Routes = [
     {
@@ -51,6 +53,7 @@ export const ANIMATION_ROUTES: Routes = [
             component: DashboardComponent,
             canActivate: [AuthGuard],
             data : {
+                sharedService: PaperAnimationService,
                 gridConfig: {
                     draggable      : false,
                     show_header    : false
@@ -70,32 +73,43 @@ export const ANIMATION_ROUTES: Routes = [
                         component: AnimationCanvasComponent,
                         config   : {
                             dragHandle: '.handle',
-                            col       : 4,
+                            col       : 5,
                             row       : 1,
                             sizex     : 12,
                             sizey     : 20
                         }
                     },
-                    {
-                        component: PlayerComponent,
-                        config   : {
-                            dragHandle: '.handle',
-                            col       : 16,
-                            row       : 1,
-                            sizex     : 4,
-                            sizey     : 2
-                        }
-                    },
-                    {
-                        component: AnimationFramesComponent,
-                        config   : {
-                            dragHandle: '.handle',
-                            col       : 16,
-                            row       : 3,
-                            sizex     : 4,
-                            sizey     : 3
-                        }
-                    }
+                    // {
+                    //     component: PlayerComponent,
+                    //     config   : {
+                    //         dragHandle: '.handle',
+                    //         col       : 16,
+                    //         row       : 1,
+                    //         sizex     : 4,
+                    //         sizey     : 2
+                    //     }
+                    // },
+                    // {
+                    //     component: AnimationFramesComponent,
+                    //     config   : {
+                    //         dragHandle: '.handle',
+                    //         col       : 16,
+                    //         row       : 3,
+                    //         sizex     : 4,
+                    //         sizey     : 6
+                    //     }
+                    // },
+                    // {
+                    //     component: AnimationFrameComponent,
+                    //     config   : {
+                    //         dragHandle: '.handle',
+                    //         col       : 16,
+                    //         row       : 9,
+                    //         sizex     : 4,
+                    //         sizey     : 6
+                    //     }
+                    // }
+
                 ]
             }
         }
