@@ -3,6 +3,11 @@
 @import 'variables';
 @import '../../node_modules/bootstrap/dist/css/bootstrap.css';
 
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
 html {
   font-size: $font_size;
   font-family: $font_family;
@@ -12,17 +17,33 @@ html {
 }
 
 body {
-  margin: 0;
-  background-color: $white;
+  color: $white;
+  background-color: $background;
 }
 
 .list {
   list-style-type: none;
   margin: 0;
   padding: 0;
+  background-color: inherit;
+  color: inherit;
+
+  li {
+    color: $white;
+    margin-bottom: 2px;
+  }
+
+  li:hover {
+    background-color: $selected;
+  }
 }
 
-button, .selectable {
+.disabled {
+  color: $disabled;
+  cursor: default;
+}
+
+.selectable {
   cursor: pointer;
 }
 
@@ -38,17 +59,110 @@ h2 {
   text-align: center;
 }
 
-//button {
-//  margin: 0;
-//  text-transform: none;
-//  background: $white;
-//  color: $black;
-//  cursor: pointer;
-//  border: none;
-//  padding: $font_size/2;
-//  font-size: $font_size;
+h5 {
+  margin-top: $gutter/6;
+}
+
+button {
+  background: $background;
+  color: $white;
+}
+
+//.dnd-drag-start {
+//  -moz-transform:scale(0.8);
+//  -webkit-transform:scale(0.8);
+//  transform:scale(0.8);
+//  //opacity:0.7;
+//  background-color: #ff2ad4;
+//  border: 2px dashed cornflowerblue;
 //}
 //
-//button:hover {
-//  background: $gray_hover;
+//.dnd-drag-enter {
+//  opacity:0.7;
+//  border: 2px dashed #000;
+//  background-color: #ceff1b;
 //}
+//
+//.dnd-drag-over {
+//  border: 2px dashed #000;
+//  background-color: purple;
+//}
+//
+//.dnd-sortable-drag {
+//  -moz-transform:scale(0.9);
+//  -webkit-transform:scale(0.9);
+//  transform:scale(0.9);
+//  opacity:0.7;
+//  border: 1px dashed #000;
+//  background-color: gold;
+//}
+//
+//.dnd-sortable-handle {
+//  background-color: purple;
+//}
+
+.selected {
+  background-color: $selected;
+  color: $white;
+}
+
+.dropbtn {
+  background-color: transparent;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+.dropbtn > i {
+  color: $white;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+  right: 0;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: block;
+  visibility: hidden;
+  position: absolute;
+  background-color: #f9f9f9;
+  transition: 0.5s;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 0;
+  right: 0;
+  margin-top: 0;
+  opacity: 0;
+  transform: translateY(-2em);
+  transition: all 0.3s ease-in-out 0s, visibility 0s linear 0.3s, z-index 0s linear 0.01s;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a, li {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover, li:hover {background-color: #f1f1f1}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+  opacity: 1;
+  z-index: 1;
+  visibility: visible;
+  transform: translateY(0%);
+  transition-delay: 0s, 0s, 0.3s; /* this removes the transition delay so the menu will be visible while the other styles transition */
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn > i {
+  color: $gray;
+}

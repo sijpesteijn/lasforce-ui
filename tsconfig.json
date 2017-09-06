@@ -23,7 +23,8 @@
       "node",
       "source-map",
       "uglify-js",
-      "webpack"
+      "webpack",
+      "jquery"
     ]
   },
   "exclude": [

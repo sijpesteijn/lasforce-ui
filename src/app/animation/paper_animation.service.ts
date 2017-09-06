@@ -10,11 +10,11 @@ export interface PaperAnimation {
 export class PaperAnimationService {
     animationSubject: Subject<PaperAnimation> = new BehaviorSubject<PaperAnimation>({ layers: [] });
 
-    getAnimation(): Observable<PaperAnimation> {
+    getPaperAnimation(): Observable<PaperAnimation> {
         return this.animationSubject;
     }
 
-    setAnimation(animation: PaperAnimation) {
+    setPaperAnimation(animation: PaperAnimation) {
         this.animationSubject.next(animation);
     }
 

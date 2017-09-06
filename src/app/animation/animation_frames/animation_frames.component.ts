@@ -1,10 +1,10 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component } from '@angular/core';
 import { AnimationService } from '../animation.service';
-import { Animation } from '../animation';
+import { Animation, Frame } from '../animation';
 import {
-    DashboardEventService, DashboardEvent, ANIMATION_FRAME_SELECTED, ANIMATION_NEXT_FRAME,
-    ANIMATION_LAST_FRAME, ANIMATION_FIRST_FRAME, ANIMATION_PREV_FRAME
+    DashboardEventService, DashboardEvent, ANIMATION_FRAME_SELECTED
 } from '../../dashboard/dashboard.service';
+import { HistoryService } from '../../history/history.service';
 
 @Component({
     selector: 'animation_frames',
@@ -19,46 +19,44 @@ export class AnimationFramesComponent {
 
     ngOnInit() {
         this.animationService.getAnimation().subscribe(animation => {
-            if(animation !== undefined && animation.id !== 0) {
-                this.animation = animation;
-                this.animation.current_frame = 0;
-                this.events.emit(new DashboardEvent(ANIMATION_FRAME_SELECTED, 0));
-            }
-        });
-        this.events.subscribe(event => {
-            if (event.key === ANIMATION_NEXT_FRAME) {
-                let curr = this.animation.current_frame;
-                if (curr < this.animation.frames.length - 1) {
-                    curr++;
-                } else {
-                    curr = 0;
-                }
-                this.animation.current_frame = curr;
-                this.events.emit(new DashboardEvent(ANIMATION_FRAME_SELECTED, curr));
-            }
-            if (event.key === ANIMATION_PREV_FRAME) {
-                let curr = this.animation.current_frame;
-                if (curr > 0) {
-                    curr--;
-                } else {
-                    curr = this.animation.total_frames - 1;
-                }
-                this.animation.current_frame = curr;
-                this.events.emit(new DashboardEvent(ANIMATION_FRAME_SELECTED, curr));
-            }
-            if (event.key === ANIMATION_LAST_FRAME) {
-                this.animation.current_frame = this.animation.total_frames - 1;
-                this.events.emit(new DashboardEvent(ANIMATION_FRAME_SELECTED, this.animation.current_frame));
-            }
-            if (event.key === ANIMATION_FIRST_FRAME) {
-                this.animation.current_frame = 0;
-                this.events.emit(new DashboardEvent(ANIMATION_FRAME_SELECTED, this.animation.current_frame));
-            }
+            this.animation = animation;
         });
     }
 
+    updateAnimation() {
+        this.animationService.saveAnimation(this.animation).subscribe();
+    }
+
     loadFrame(frameNumber: number) {
-        this.animation.current_frame = frameNumber;
         this.events.emit(new DashboardEvent(ANIMATION_FRAME_SELECTED, frameNumber));
+    }
+
+    removeFrame(frame: Frame) {
+        let index = this.animation.frames.indexOf(frame);
+        this.animation.frames = this.animation.frames.filter(frm => frm.id !== frame.id);
+        if (this.animation.frames.length === 0) {
+            this.animation.current_frame = 0;
+        } else if (this.animation.frames.length - 1 === index) {
+            this.animation.current_frame = this.animation.frames.length - 1;
+        } else {
+            this.animation.current_frame = index - 1;
+        }
+        if (this.animation.frames.length === 0) {
+            let frame: Frame = {
+                id         : 1,
+                repeat     : 1,
+                name       : 'Frame',
+                total_paths: 0,
+                paths      : []
+            };
+            this.animation.frames.push(frame);
+        }
+        this.animation.total_frames = this.animation.frames.length;
+        this.animationService.saveAnimation(this.animation).subscribe();
+    }
+
+    updateFrame(frame: Frame, event: any) {
+        frame[event.field] = event.value;
+        this.animationService.saveAnimation(this.animation).subscribe();
     }
 }

@@ -8,8 +8,8 @@ import { DashboardModule } from '../dashboard/dashboard.module';
 @NgModule({
     imports: [
         CommonModule,
+        DashboardModule,
         FormsModule,
-        DashboardModule
     ],
     exports: [
         PlayerComponent

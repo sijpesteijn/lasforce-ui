@@ -1,22 +1,37 @@
-<table>
-    <tr>
-        <td>
-            <button (click)="undo()"><i class="fa fa-undo"></i></button>
-        </td>
-        <td>
-            <button (click)="redo()"><i class="fa fa-repeat"></i></button>
-        </td>
-    </tr>
-    <tr>
-        <td>
-            <button (click)="selectTool('select')" [class.active]="selectedTool === 'select'">
-                <i class="fa fa-mouse-pointer"></i>
-            </button>
-        </td>
-        <td>
-            <button (click)="selectTool('line')" [class.active]="selectedTool === 'line'">
-                <i class="fa fa-pencil"></i>
-            </button>
-        </td>
-    </tr>
-</table>
+<div class="widget-container">
+    <table class="btn-group">
+        <tr>
+            <td>
+                <button class="btn btn-default" (click)="historyService.undo()" [disabled]="!historyService.canUndo()">
+                    <i class="fa fa-undo"></i></button>
+            </td>
+            <td>
+                <button class="btn btn-default" (click)="historyService.redo()" [disabled]="!historyService.canRedo()">
+                    <i class="fa fa-repeat"></i></button>
+            </td>
+            <td>
+                <color-picker (onChange)="selectColor($event)"></color-picker>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <button class="btn btn-default" (click)="selectTool('select')"
+                        [class.active]="selectedTool?.getName() === 'select'">
+                    <i class="fa fa-mouse-pointer"></i>
+                </button>
+            </td>
+            <td>
+                <button class="btn btn-default" (click)="selectTool('line')"
+                        [class.active]="selectedTool?.getName() === 'line'">
+                    <i class="fa fa-pencil"></i>
+                </button>
+            </td>
+            <td>
+                <button class="btn btn-default" (click)="selectTool('rectangle')"
+                        [class.active]="selectedTool?.getName() === 'rectangle'">
+                    <i class="fa fa-square-o"></i>
+                </button>
+            </td>
+        </tr>
+    </table>
+</div>

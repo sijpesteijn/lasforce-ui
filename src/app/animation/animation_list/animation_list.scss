@@ -1,25 +1,5 @@
-.animation-list {
-  vertical-align: middle;
-}
+@import '../../../styles/variables';
 
-.panel-title {
-  overflow: hidden;
-  background-color: $gray;
-  color: $white;
-
-  h4 {
-    //width: 100%;
-    //margin: auto;
-    float: left;
-  }
-
-  a {
-    float: right;
-    margin-right: $gutter/2;
-  }
-}
-
-.list-container {
-  height: 100%;
-  overflow: auto;
+.list {
+  margin-top: 3px;
 }

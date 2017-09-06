@@ -3,8 +3,9 @@ import { NoContentComponent } from './no-content';
 import { LoginComponent } from './login/login.component';
 
 export const ROUTES: Routes = [
-    { path: '', redirectTo: 'animations/list', pathMatch: 'full' },
+    { path: '', redirectTo: 'animations/animation_edit', pathMatch: 'full' },
     { path: 'animations', loadChildren: './animation#AnimationModule'},
+    { path: 'shows', loadChildren: './show#ShowModule'},
     { path: 'login', component: LoginComponent},
     { path: '**', component: NoContentComponent },
 ];

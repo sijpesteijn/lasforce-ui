@@ -1,0 +1,11 @@
+<div class="widget-header" *ngIf="widgetMetadata.title || widgetMetadata.controls?.length > 0">
+    <div class="widget-inner">
+        <div class="widget-header-container">
+            <div class="widget-header-title"><h5 [innerHTML]="widgetMetadata.title | translate"></h5></div>
+            <div class="widget-header-controls">
+                Controls
+                <!--<widget-control class="control" [control]="control" *ngFor="let control of widgetMetadata.controls"></widget-control>-->
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+@import '../../../../styles/variables';
+
+.widget-header {
+  //display: table-row;
+  background: $widget_header_color;
+  height: 0;
+
+  .widget-inner {
+    display: table-cell;
+
+    .widget-header-container {
+      //position: relative;
+      overflow: hidden;
+      width: 100%;
+
+      .widget-header-title {
+        float: left;
+        //margin-left: 5px;
+
+        h5 {
+          color: red;
+        }
+      }
+
+      .widget-header-controls {
+        float: right;
+        //margin-top: 4px;
+        //margin-right: $gutter/2;
+
+        .control {
+          padding: $gutter/4;
+        }
+      }
+    }
+  }
+}

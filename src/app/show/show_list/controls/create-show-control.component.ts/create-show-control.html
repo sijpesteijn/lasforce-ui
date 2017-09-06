@@ -1,0 +1,7 @@
+<div class="dropdown" *ngIf="show">
+    <a class="dropbtn" href="#" (click)="newShow(false)"><i class="fa fa-plus"></i></a>
+    <ul class="dropdown-content list-group" *ngIf="show.id !== 0">
+        <li class="list-group-item selectable" (click)="newShow(true)">Clone current</li>
+        <li class="list-group-item selectable" (click)="newShow(false)">Empty</li>
+    </ul>
+</div>

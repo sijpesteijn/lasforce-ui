@@ -13,6 +13,8 @@ import { LanguageDetectorService } from './i18n/language.detector.service';
 })
 export class AppComponent {
     private showMenu: boolean = false;
+    localState = { value: '' };
+    date: Date = new Date();
 
     constructor(private translateI18Next: TranslateI18Next,
                 private languageDetector: LanguageDetectorService) {

@@ -9,11 +9,6 @@
                 </a>
             </div>
         </div>
-        <widget [component]='widget.component' [sharedService]='sharedService'></widget>
+        <widget [widgetMetadata]='widget' [sharedService]='sharedService'></widget>
     </div>
 </div>
-<!--<div [ngGrid]="gridConfig" class="grid">-->
-    <!--<div *ngFor='let widget of widgets | async' [(ngGridItem)]="widget.settings">-->
-        <!--<widget [component]='widget.component'></widget>-->
-    <!--</div>-->
-<!--</div>-->

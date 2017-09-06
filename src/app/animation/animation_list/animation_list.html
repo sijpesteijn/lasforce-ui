@@ -1,19 +1,13 @@
-<div [ngSwitch]="status" class="animation-list">
-    <div class="panel-title">
-        <h4 class="panel-title" [innerHTML]="'ANIMATION.LIST.TITLE' | translate"></h4>
-        <a href="#" (click)="upload()"><i class="fa fa-upload"></i></a>
-    </div>
-    <template [ngSwitchCase]="'loading'">
-        Loading animations
+<div [ngSwitch]="animations">
+    <template [ngSwitchCase]="undefined">
         <spinner></spinner>
     </template>
     <template ngSwitchDefault>
-        <div class="list-container">
-            <ul class="list-group">
-                <li class="list-group-item selectable" *ngFor="let animation of animations"
-                    (click)="preview(animation.id)">{{animation.name}}
-                </li>
-            </ul>
-        </div>
+        <ul class="list">
+            <li class="selectable" *ngFor="let animation of animations" [routerLink]="['/animations/animation_edit/']"
+                [queryParams]="{ id: animation.id }" [ngClass]="{ selected: selectedAnimation?.id === animation.id}">
+                {{animation.name}}
+            </li>
+        </ul>
     </template>
 </div>

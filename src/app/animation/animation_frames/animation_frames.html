@@ -1,12 +1,19 @@
 <div [ngSwitch]="animation">
     <template [ngSwitchCase]="undefined">
-        No animation selected
+        <span [innerHTML]="'ANIMATION.NO_SELECTION' | translate"></span>
     </template>
     <template ngSwitchDefault>
-        <ul class="list-group">
-            <li class="list-group-item selectable" [ngClass]="{ selected: animation?.current_frame === i}"
+        <ul class="list" dnd-sortable-container [sortableData]="animation?.frames">
+            <li class="selectable" [ngClass]="{ selected: animation?.current_frame === i}"
                 *ngFor="let frame of animation?.frames; let i = index"
-                (click)="loadFrame(i)">{{ frame.name }}</li>
+                (click)="loadFrame(i)" dnd-sortable [sortableIndex]="i" (onDropSuccess)="updateAnimation()" draggable="true">
+                <div class="field-edit">
+                    <delete-confirm (onConfirm)="removeFrame(frame,$event)"></delete-confirm>
+                    <div class="field-edit-edit">
+                        <click-to-edit (onSave)="updateFrame(frame,$event)"[field]="'name'" [value]="frame.name"></click-to-edit>
+                    </div>
+                </div>
+            </li>
         </ul>
     </template>
 </div>

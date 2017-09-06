@@ -12,7 +12,10 @@ import { SpinnerComponent } from './spinner.component';
     declarations: [
         SpinnerComponent
     ],
-    providers: []
+    providers: [],
+    entryComponents: [
+        SpinnerComponent
+    ]
 })
 export class SpinnerModule {
 }

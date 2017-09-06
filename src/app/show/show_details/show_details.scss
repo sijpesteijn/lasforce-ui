@@ -1,0 +1,19 @@
+@import '../../../styles/variables';
+
+.field-edit {
+  position: absolute;
+  background-color: transparent;
+  height: 20px;
+}
+
+.selected .field-edit-edit {
+  background-color: $selected;
+}
+
+.field-edit-edit:hover {
+  background-color: $selected;
+}
+
+.field-edit-edit {
+  margin-left: 15px;
+}

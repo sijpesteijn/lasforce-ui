@@ -1,12 +1,16 @@
 import { Injectable, EventEmitter } from '@angular/core';
 
-export const LOAD_ANIMATION = 'loadAnimation';
-export const ANIMATION_NEXT_FRAME = 'animationNextFrame';
-export const ANIMATION_LAST_FRAME = 'animationLastFrame';
-export const ANIMATION_PREV_FRAME = 'animationPrevFrame';
-export const ANIMATION_FIRST_FRAME = 'animationFirstFrame';
-export const ANIMATION_FRAME_SELECTED = 'animationFrameSelected';
-export const ANIMATION_FRAME_OBJECT_SELECTED = 'animationFrameObjectSelected';
+export const MOUSE_CURSOR_EVENT                = 'mouseCursorEvent';
+export const ZOOM_LEVEL                        = 'zoomLevel';
+export const LOAD_ANIMATION                    = 'loadAnimation';
+export const ANIMATION_LOADED                  = 'animationLoaded';
+export const ANIMATION_SPEED                   = 'animationSpeed';
+export const PLAYER_BUTON_NEXT                 = 'animationNextFrame';
+export const PLAYER_BUTTON_LAST                = 'animationLastFrame';
+export const PLAYER_BUTTON_PREV                = 'animationPrevFrame';
+export const PLAYER_BUTTON_FIRST               = 'animationFirstFrame';
+export const ANIMATION_FRAME_SELECTED          = 'animationFrameSelected';
+export const ANIMATION_FRAME_OBJECT_SELECTED   = 'animationFrameObjectSelected';
 export const ANIMATION_FRAME_OBJECT_DESELECTED = 'animationFrameObjectDeselected';
 
 export class DashboardEvent {

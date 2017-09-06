@@ -1,33 +1,30 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AnimationService } from '../animation.service';
-import { Animation } from '../animation';
-import { AppEventService, AppEvent, TITLE } from '../../app.service';
-import { PaperAnimationService } from '../paper_animation.service';
-import { DashboardEventService, LOAD_ANIMATION } from '../../dashboard/dashboard.service';
+import { Animation, Frame } from '../animation';
 
 @Component({
     selector: 'animation_list',
-    template: require('./animation_list.html')
+    template: require('./animation_list.html'),
+    styles: [require('./animation_list.scss')]
 })
 export class AnimationListComponent {
-    private animations: Animation[] = [];
-    private status: string = 'loading';
+    private animations: Animation[];
+    private selectedAnimation: Animation;
 
-    constructor(private animationService: AnimationService,
-                private dashboardEvents: DashboardEventService,
-                private events: AppEventService) {
+    constructor(private animationService: AnimationService) {
     }
 
     ngAfterViewInit() {
         this.animationService.getAnimations().subscribe(animations => {
             this.animations = animations;
-            this.status = 'loaded';
         });
+        this.animationService.getAnimation().subscribe(animation => {
+            this.selectedAnimation = animation;
+        })
     }
 
     preview(id: number) {
-        // this.dashboardEvents.emit(new AppEvent(LOAD_ANIMATION));
-        this.animationService.getAnimationById(id).subscribe(animation => {
-        });
+        this.animationService.getAnimationById(id).subscribe(animation => {});
     }
+
 }

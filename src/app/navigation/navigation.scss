@@ -1,9 +1,12 @@
 @import '../../styles/variables';
+@import '../../styles/shapes';
 
 nav {
+  @include shadow();
   background-color: $nav_background_color;
   position: absolute;
   display: block;
   z-index: 1;
   padding-left: $gutter;
+  border: 1px solid $black;
 }

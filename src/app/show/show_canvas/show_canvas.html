@@ -1,0 +1,6 @@
+<div class="container">
+    <spinner *ngIf="status === 'loading'"></spinner>
+    <div class="canvas-container" *ngIf="status === 'loaded'">
+        <canvas #show id="show"></canvas>
+    </div>
+</div>

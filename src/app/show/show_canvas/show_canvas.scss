@@ -1,0 +1,28 @@
+@import '../../../styles/variables';
+
+.container {
+  position: relative;
+  height: 673px;
+  overflow: hidden;
+}
+
+.canvas-container {
+  position: absolute;
+  //top: 50%;
+  //left: 30%;
+  //margin: 0 -50% 0 0;
+  //transform: translate(-50%, 0)
+}
+
+#show {
+  width: 491px;
+  height: 491px;
+  background-color: black;
+  border: 1px solid purple;
+  float: left;
+  pointer-events:none;
+}
+
+.status {
+  display: none;
+}

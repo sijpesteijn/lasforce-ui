@@ -1,0 +1,76 @@
+@import '../../../styles/variables';
+
+.widget-container {
+  height: 100%;
+  width: 100%;
+  display: table;
+}
+
+.widget-header {
+  display: table-row;
+  background: $widget_header_color;
+  height: 0;
+
+  .widget-inner {
+    display: table-cell;
+
+    .widget-header-container {
+      position: relative;
+
+      .widget-header-title {
+        float: left;
+        margin-left: 5px;
+
+        h5 {
+          color: $white;
+        }
+      }
+
+      .widget-header-controls {
+        float: right;
+        margin-top: 4px;
+        margin-right: $gutter/2;
+
+        .control {
+          padding: $gutter/4;
+        }
+      }
+    }
+  }
+}
+
+.widget-content {
+  display: table-row;
+  margin-top: 3px;
+
+  .widget-inner {
+    height: 100%;
+    position: relative;
+    //background: pink;
+
+    .widget-content-scrollable {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      overflow: auto;
+    }
+  }
+}
+
+.widget-footer {
+  display: table-row;
+  background: $widget_header_color;
+  height: 0;
+
+  .widget-inner {
+    display: table-cell;
+
+    .widget-footer-content {
+      margin-top: 4px;
+      margin-left: 5px;
+      margin-bottom: 4px;
+    }
+  }
+}

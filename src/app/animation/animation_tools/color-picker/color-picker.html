@@ -1,0 +1,12 @@
+<div class="btn-group" dropdown>
+    <button dropdownToggle type="button" [style.background-color]="color" class="btn btn-default dropdown-toggle">
+        <span class="caret"></span>
+    </button>
+    <ul *dropdownMenu class="dropdown-menu color-picker-dropdown" role="menu">
+        <li role="menuitem" class="color-picker-color" *ngFor="let color of config.availableColors" [style.width]="config.width + 'px'"
+            [style.height]="config.height + 'px'"
+            [style.border-radius]="config.borderRadius + 'px'" [style.background-color]="color"
+            (click)="setColor(color)" [title]="color">
+        </li>
+    </ul>
+</div>

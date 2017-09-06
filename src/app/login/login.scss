@@ -1,0 +1,9 @@
+@import '../../styles/variables';
+
+.login-container {
+  width: $gutter*10;
+  margin: $gutter*4 auto;
+  border: 1px solid $gray_hover;
+  border-radius: $gutter;
+  padding: $gutter;
+}

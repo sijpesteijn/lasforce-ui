@@ -1,11 +1,16 @@
 <header class="main-header">
-    <button class="btn" (click)="toggleMenu($event)">
-        <i *ngIf="!showMenu" class="fa fa-bars"></i>
-        <i *ngIf="showMenu" class="fa fa-close"></i>
-    </button>
-    <h2>{{title}}</h2>
+    <div class="logo">
+        <a [routerLink]="['/']" class="logo-container">
+            <h2>Las Force</h2>
+        </a>
+    </div>
+    <div class="links">
+        <a [routerLink]="['/animations/animation_edit/']">Animations</a>
+        &nbsp;&nbsp;
+        <a [routerLink]="['/shows/show_list']">Shows</a>
+    </div>
 
-    <div class="dropdown">
+    <div class="user dropdown">
         <button class="dropbtn"><i class="user fa fa-2x fa-user"></i></button>
         <div class="dropdown-content">
             <a href="#" [routerLink]="['/login']">Logout</a>

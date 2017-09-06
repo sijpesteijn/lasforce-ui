@@ -1,0 +1,27 @@
+<div class="widget-container">
+    <div class="widget-header" *ngIf="widgetMetadata.title || widgetMetadata.controls?.length > 0">
+        <div class="widget-inner">
+            <div class="widget-header-container">
+                <div class="widget-header-title"><h5 [innerHTML]="widgetMetadata.title | translate"></h5></div>
+                <div class="widget-header-controls">
+                    <widget-control class="control" [control]="control" *ngFor="let control of widgetMetadata.controls"></widget-control>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="widget-content">
+        <div class="widget-inner" [class.widget-header-margin]="widgetMetadata.title || widgetMetadata.controls?.length > 0">
+            <div class="widget-content-scrollable">
+                <!--<div style="height:1000px;">Content</div>-->
+                <template #location></template>
+            </div>
+        </div>
+    </div>
+
+    <!--<div class="widget-footer">-->
+        <!--<div class="widget-inner">-->
+            <!--<div class="widget-footer-content">Faater</div>-->
+        <!--</div>-->
+    <!--</div>-->
+</div>

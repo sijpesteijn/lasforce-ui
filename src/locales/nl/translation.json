@@ -1,3 +1,17 @@
 {
-  "ANIMATION.LIST.TITLE": "Animations"
+  "ANIMATION.NO_SELECTION": "No animation selected",
+  "ANIMATION.LIST.TITLE": "Animations",
+  "ANIMATION.INFO.TITLE": "Animation details",
+  "ANIMATION.INFO.NAME": "Name",
+  "ANIMATION.INFO.REPEAT": "Repeat",
+  "ANIMATION.INFO.TOTAL_FRAMES": "# frames",
+  "ANIMATION.INFO.FRAME_TIME": "Frame time",
+  "ANIMATION.INFO.CURRENT_FRAME": "Current",
+  "ANIMATION.FRAMES.TITLE": "Animation frames",
+
+  "ANIMATION.FRAME.TITLE": "Frame details",
+
+  "GENERAL.SURE": "Zeker weten?",
+
+  "SHOW.LIST.TITLE": "Shows"
 }

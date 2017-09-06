@@ -6,7 +6,8 @@ import { AppEventService, TITLE, AppEvent } from '../app.service';
 
 @Component({
     selector: 'login',
-    template: require('./login.html')
+    template: require('./login.html'),
+    styles: [require('./login.scss')]
 })
 export class LoginComponent {
     model: any = {

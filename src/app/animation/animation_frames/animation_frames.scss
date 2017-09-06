@@ -1,5 +1,27 @@
+@import '../../../styles/variables';
 
+.field-edit {
+  position: relative;
+  background-color: transparent;
+  height: 20px;
 
-.selected {
-  background-color: red;
+  delete-confirm {
+    float: left;
+
+    .fa-trash {
+      color: $white;
+    }
+  }
+}
+
+.selected .field-edit-edit {
+  background-color: $selected;
+}
+
+.field-edit-edit:hover {
+  background-color: $selected;
+}
+
+.field-edit-edit {
+  margin-left: 15px;
 }

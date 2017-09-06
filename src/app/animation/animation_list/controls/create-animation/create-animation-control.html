@@ -1,0 +1,7 @@
+<div class="dropdown">
+    <a class="dropbtn" (click)="newAnimation(false)"><i class="fa fa-plus"></i></a>
+    <ul class="dropdown-content list-group" *ngIf="animation?.id !== 0">
+        <li class="list-group-item selectable" (click)="newAnimation(true)">Clone current</li>
+        <li class="list-group-item selectable" (click)="newAnimation(false)">Empty</li>
+    </ul>
+</div>

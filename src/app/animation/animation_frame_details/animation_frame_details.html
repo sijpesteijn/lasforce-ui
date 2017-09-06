@@ -1,0 +1,26 @@
+<div [ngSwitch]="paperAnimation" class="widget-container">
+    <div class="widget-header">
+        <h5 class="widget-header-title" [innerHTML]="'ANIMATION.FRAME.TITLE' | translate"></h5>
+    </div>
+    <div class="widget-content">
+    <template [ngSwitchCase]="undefined">
+        <span [innerHTML]="'ANIMATION.NO_SELECTION' | translate"></span>
+    </template>
+    <template ngSwitchDefault>
+        <tree-root
+                #tree
+                [nodes]="nodes"
+                [options]="options"
+                (onActiveChanged)="onActiveChanged($event)">
+                <!--(onFocus)="onFocus($event)"-->
+                <!--(onBlur)="onBlur($event)"-->
+                <!--(onActivate)="onActive($event)"-->
+                <!--(onDeactivate)="onDeactivate($event)"-->
+                <!--<custom-tree-node [node]="node"></custom-tree-node>-->
+            <template #treeNodeTemplate let-node="node" let-index="index">
+                <click-to-edit [field]="node.data.name"></click-to-edit>
+            </template>
+        </tree-root>
+    </template>
+    </div>
+</div>

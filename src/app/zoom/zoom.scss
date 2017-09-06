@@ -1,0 +1,25 @@
+@import '../../styles/variables';
+
+.zoom-container {
+  position: relative;
+  padding: $gutter/4;
+  overflow: hidden;
+}
+
+.zoom {
+  float: left;
+  padding-left: $gutter/6;
+  padding-right: $gutter/6;
+  min-width: $gutter*1.5;
+  position: relative;
+  overflow: hidden;
+}
+
+.fa {
+  float: left;
+  padding-top: $gutter/6;
+}
+
+.zoom > span {
+  float: right;
+}

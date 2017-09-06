@@ -1,8 +1,10 @@
 <div class="btn-group" role="group">
     <button class="btn btn-default" (click)="firstFrame()"><i class="fa fa-fast-backward"></i></button>
     <button class="btn btn-default" (click)="prevFrame()"><i class="fa fa-backward"></i></button>
-    <button class="btn btn-default" (click)="stop()" *ngIf="intervalSubscription"><i class="fa fa-stop"></i></button>
-    <button class="btn btn-default" (click)="play()" *ngIf="!intervalSubscription"><i class="fa fa-play"></i></button>
-    <button class="btn btn-default" (click)="nextFrame()"><i class="fa fa-forward" ></i></button>
+    <button class="btn btn-default" (click)="stop()" *ngIf="intervalSubscription"><i class="fa fa-stop"></i>
+    </button>
+    <button class="btn btn-default" (click)="play()" *ngIf="!intervalSubscription"><i class="fa fa-play"></i>
+    </button>
+    <button class="btn btn-default" (click)="nextFrame()"><i class="fa fa-forward"></i></button>
     <button class="btn btn-default" (click)="lastFrame()"><i class="fa fa-fast-forward"></i></button>
 </div>

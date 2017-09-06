@@ -1,0 +1,5 @@
+<div class="zoom-container">
+    <i class="fa fa-minus" (click)="zoomDown()" [class.disabled]="zoom <= min" [class.selectable]="zoom > min"></i>
+    <div class="zoom selectable" (dblclick)="resetZoom()"><span>{{ zoom }}%</span></div>
+    <i class="fa fa-plus" (click)="zoomUp()" [class.disabled]="zoom >= max" [class.selectable]="zoom < max"></i>
+</div>

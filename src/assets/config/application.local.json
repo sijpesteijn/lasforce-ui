@@ -1,6 +1,15 @@
 {
   "animation" : {
     "all" : "https://lasforce.dev/animations",
-    "get" : "https://lasforce.dev/animations/:id"
+    "get" : "https://lasforce.dev/animations/:id",
+    "save" : "https://lasforce.dev/animations/save",
+    "delete" : "https://lasforce.dev/animations/:id",
+    "upload" : "https://lasforce.dev/animations/upload"
+  },
+  "show" : {
+    "all" : "https://lasforce.dev/shows",
+    "get" : "https://lasforce.dev/shows/:id",
+    "save" : "https://lasforce.dev/shows/save"
   }
+
 }

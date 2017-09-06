@@ -1,0 +1,45 @@
+<div [ngSwitch]="animation">
+    <template [ngSwitchCase]="undefined">
+        <span [innerHTML]="'ANIMATION.NO_SELECTION' | translate"></span>
+    </template>
+    <template ngSwitchDefault>
+        <table class="table">
+            <tbody>
+            <tr>
+                <td class="col-md-6" [innerHTML]="'ANIMATION.INFO.NAME' | translate"></td>
+                <td>
+                    <click-to-edit (onSave)="updateAnimation($event)" [field]="'name'" [value]="animation.name"></click-to-edit>
+                </td>
+            </tr>
+            <tr>
+                <td [innerHTML]="'ANIMATION.INFO.FRAME_TIME' | translate"></td>
+                <td>
+                    <click-to-edit (onSave)="updateAnimation($event)" [field]="'frame_time'" [value]="animation.frame_time" [unit]="'ms'"></click-to-edit>
+                </td>
+            </tr>
+            <tr>
+                <td [innerHTML]="'ANIMATION.INFO.REPEAT' | translate"></td>
+                <td>
+                    <click-to-edit (onSave)="updateAnimation($event)" [field]="'repeat'" [value]="animation.repeat"></click-to-edit>
+                </td>
+            </tr>
+            <tr>
+                <td [innerHTML]="'ANIMATION.INFO.TOTAL_FRAMES' | translate"></td>
+                <td>{{ animation.total_frames }}</td>
+            </tr>
+            <tr>
+                <td [innerHTML]="'ANIMATION.INFO.CURRENT_FRAME' | translate"></td>
+                <td>{{ animation.current_frame + 1 }}</td>
+            </tr>
+            <tr>
+                <td></td>
+                <td class="delete-animation">
+                    <delete-confirm (onConfirm)="removeAnimation(animation,$event)">
+                        <span class="delete-button btn-lg btn-danger">DELETE</span>
+                    </delete-confirm>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </template>
+</div>

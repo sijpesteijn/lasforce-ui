@@ -1,0 +1,12 @@
+<div class="animation_player-container">
+    <player [speed]="2000*speed"></player>
+    <div class="animation_player-controls">
+        <div class="animation_player-control">
+            <infinite-knob (onChange)="setSpeed($event)" [angle]="speed" [min]="50" [step]="50"></infinite-knob>
+            <click-to-edit (onSave)="setFramesPerSecond($event)" [field]="speed" [unit]="'f/s'"></click-to-edit>
+        </div>
+        <div class="animation_player-control">
+            <zoom [min]="40" [max]="400" [zoom]="zoom*100" (onZoom)="setZoom($event)"></zoom>
+        </div>
+    </div>
+</div>

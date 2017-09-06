@@ -1,0 +1,30 @@
+@import '../../../styles/variables';
+
+.animation_player-container {
+  //position: relative;
+  //overflow: hidden;
+}
+
+.animation_player-controls {
+  //position: relative;
+  //overflow: hidden;
+}
+
+.animation_player-control {
+  margin: 2px;
+  float: left;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid $widget_border_color;
+  border-radius: $gutter/3;
+  padding: $gutter/4;
+}
+
+.animation_player-control > click-to-edit {
+  float: left;
+  padding-top: $gutter/4;
+}
+
+.animation_player-control > infinite-knob {
+  text-align: center;
+}

@@ -1,2 +1,14 @@
 {
+  "ANIMATION.LIST.TITLE": "Animations",
+  "ANIMATION.INFO.TITLE": "Animation details",
+  "ANIMATION.INFO.NAME": "Name",
+  "ANIMATION.INFO.REPEAT": "Repeat",
+  "ANIMATION.INFO.FRAME_TIME": "Frame time",
+  "ANIMATION.INFO.TOTAL_FRAMES": "Total frames",
+  "ANIMATION.FRAMES.TITLE": "Animation frames",
+
+  "GENERAL.SURE": "Sure?",
+
+  "SHOW.LIST.TITLE": "Shows"
+
 }

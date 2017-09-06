@@ -1,11 +1,17 @@
-import { Component, ViewChild, HostListener } from '@angular/core';
+import { Component, ViewChild, HostListener, animate } from '@angular/core';
 import {
-    DashboardEventService, ANIMATION_FRAME_SELECTED, LOAD_ANIMATION
+    DashboardEventService, ANIMATION_FRAME_SELECTED, LOAD_ANIMATION, DashboardEvent,
+    PLAYER_BUTTON_FIRST, PLAYER_BUTTON_LAST, PLAYER_BUTTON_PREV, PLAYER_BUTON_NEXT,
+    MOUSE_CURSOR_EVENT, ANIMATION_SPEED, ANIMATION_LOADED, ZOOM_LEVEL
 } from '../../dashboard/dashboard.service';
 import { AnimationService } from '../animation.service';
 import { Animation, Frame } from '../animation';
 import * as paper from 'paper';
 import { PaperAnimationService, PaperAnimation } from '../paper_animation.service';
+import { ToolHandler } from './tool_handler.component';
+import { HistoryService } from '../../history/history.service';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'animation_canvas',
@@ -15,249 +21,247 @@ import { PaperAnimationService, PaperAnimation } from '../paper_animation.servic
 export class AnimationCanvasComponent {
     @ViewChild('animation')
     private canvas: any;
-    private status: string = 'loaded';
-    private layer: paper.Layer;
-    private selectedSegment: paper.Segment;
-    private selectedPath: paper.Path;
-    private sharedService: PaperAnimationService;
-    private mouseDown: boolean = false;
+    private status: string           = 'loaded';
+    private toolHandler: ToolHandler;
+    // private sharedService: PaperAnimationService;
     private animation: Animation;
-    private hitOptions     = {
-        segments: true,
-        stroke: true,
-        fill: false,
-        tolerance: 5
-    };
+    // private paperAni: PaperAnimation = {
+    //     layers: []
+    // };
+    // private zoom: number             = 1;
 
     @HostListener('mousedown', ['$event'])
-    onMousedown(event: any) {
-        this.mouseDown = true;
-        let point = new paper.Point(event.offsetX, event.offsetY);
-        let hitResult = paper.project.hitTest(point, this.hitOptions);
-        paper.project.activeLayer.selected = false;
-        if (hitResult && hitResult.item)
-            hitResult.item.selected = true;
-        if (event.shiftKey === true) {
-            if (hitResult.type == 'segment') {
-                hitResult.segment.remove();
-            }
-            return;
-        }
-
-        if (hitResult) {
-            this.selectedPath = hitResult.item as paper.Path;
-            if (hitResult.type == 'segment') {
-                this.selectedSegment = hitResult.segment;
-            } else if (hitResult.type == 'stroke') {
-                let location = hitResult.location;
-                this.selectedSegment      = this.selectedPath.insert(location.index + 1, point);
-                // path.smooth();
-            }
-            hitResult.item.bringToFront();
+    onMouseDown(event: any) {
+        if (this.animation && this.toolHandler) {
+            this.toolHandler.onMouseDownCanvas(event);
         }
     }
 
     @HostListener('mouseup', ['$event'])
     onMouseUp(event: any) {
-        this.mouseDown = false;
+        if (this.animation && this.toolHandler) {
+            this.toolHandler.onMouseUpCanvas(event);
+        }
     }
 
     @HostListener('mousemove', ['$event'])
     onMouseMove(event: any) {
-        if (this.mouseDown === true) {
-            let point = new paper.Point(event.offsetX, event.offsetY);
-            if (this.selectedSegment) {
-                this.selectedSegment.point = point;
-                this.selectedPath.smooth();
-            } else if (this.selectedPath) {
-                this.selectedPath.position = point;
-            }
+        if (this.animation && this.toolHandler) {
+            this.toolHandler.onMouseMoveCanvas(event);
         }
     }
 
+    @HostListener('mousewheel', ['$event']) onMouseWheelChrome(event: any) {
+        this.mouseWheelFunc(event);
+    }
 
+    @HostListener('DOMMouseScroll', ['$event']) onMouseWheelFirefox(event: any) {
+        this.mouseWheelFunc(event);
+    }
 
-    constructor(private events: DashboardEventService, private animationService: AnimationService) {
+    @HostListener('onmousewheel', ['$event']) onMouseWheelIE(event: any) {
+        this.mouseWheelFunc(event);
+    }
+
+    mouseWheelFunc(evnt: any) {
+        let event = window.event || evnt; // old IE support
+        if (event.altKey === true) {
+            let delta = Math.max(-1, Math.min(1, (event.wheelDelta || -event.detail)));
+            if (delta > 0) {
+                this.zoomUp();
+            } else if (delta < 0) {
+                this.zoomDown();
+            }
+            // this.zoom         = paper.view.zoom;
+            // for IE
+            event.returnValue = false;
+            // for Chrome and Firefox
+            if (event.preventDefault) {
+                event.preventDefault();
+            }
+        } else if (event.shiftKey === true) {
+            let orgCenter = paper.view.center;
+            console.log(orgCenter);
+            // paper.view.center = new paper.Point(orgCenter.x + evnt.deltaX, orgCenter.y - evnt.deltaY);
+        }
+    }
+
+    constructor(private events: DashboardEventService,
+                public route: ActivatedRoute,
+                public router: Router,
+                private animationService: AnimationService,
+                private historyService: HistoryService) {
+    }
+
+    ngOnInit() {
+        this.route.queryParams.subscribe(p => {
+                if (p['id']) {
+                    console.log('Getting animation with id: ', p['id']);
+                    this.animationService.getAnimationById(p['id']).subscribe(animation => {
+                        this.loadAnimation(animation);
+                    });
+                }
+                // console.log(this.route);
+            });
+        this.events.subscribe(event => {
+            if (event.key === ANIMATION_FRAME_SELECTED) {
+                this.switchLayers(this.animation.current_frame, event.value);
+            } else if (event.key === PLAYER_BUTON_NEXT) {
+                let currentFrame = this.animation.current_frame;
+                let newFrame     = 0;
+                if (currentFrame < this.animation.frames.length - 1) {
+                    newFrame = currentFrame + 1;
+                }
+                this.switchLayers(currentFrame, newFrame);
+            } else if (event.key === PLAYER_BUTTON_PREV) {
+                let currentFrame = this.animation.current_frame;
+                let newFrame     = this.animation.total_frames - 1;
+                if (currentFrame > 0) {
+                    newFrame = currentFrame - 1;
+                }
+                this.switchLayers(currentFrame, newFrame);
+            } else if (event.key === PLAYER_BUTTON_LAST) {
+                this.switchLayers(this.animation.current_frame, this.animation.total_frames - 1);
+            } else if (event.key === PLAYER_BUTTON_FIRST) {
+                this.switchLayers(this.animation.current_frame, 0);
+            } else if (event.key === ANIMATION_SPEED) {
+                if (this.animation) {
+                    this.animation.frame_time = event.value;
+                    this.animationService.saveAnimation(this.animation).debounce(() =>
+                        Observable.interval(700)).subscribe(result => {});
+                }
+
+            }
+        });
+        // this.animationService.getAnimation().subscribe(animation => {
+        //     if (animation !== undefined) {
+        //         this.loadAnimation(animation);
+        //         // this.events.emit(new DashboardEvent(ANIMATION_LOADED, animation));
+        //     }
+        // });
     }
 
     ngAfterViewInit() {
         paper.install(window);
         paper.setup(this.canvas.nativeElement);
-        this.animationService.getAnimation().subscribe(animation => {
-            if (animation.id !== 0)
-                this.loadAnimation(animation);
-        });
 
         this.events.subscribe(event => {
             if (event.key === 'selectTool') {
-                console.log('Tool: ', event.value);
-            }
-            if (event.key === ANIMATION_FRAME_SELECTED) {
-                paper.project.activeLayer.visible         = false;
-                paper.project.layers[event.value].visible = true;
-                paper.project.layers[event.value].activate();
-                paper.project.view.update();
-            }
-            if (event.key === LOAD_ANIMATION) {
+                paper.project.activeLayer.selected = false;
+                this.setToolHandler(event.value);
+            } else if (event.key === LOAD_ANIMATION) {
                 this.status = 'loading';
+            } else if (event.key === ZOOM_LEVEL) {
+                paper.view.zoom = event.value;
             }
         });
     }
 
     private loadAnimation(animation: Animation) {
+        let start = performance.now();
+        console.log('Loading animation: ', animation);
         paper.project.clear();
-        paper.project.view.update();
-        this.animation               = animation;
-        let paperAni: PaperAnimation = {
-            layers: []
-        };
+        this.events.emit(new DashboardEvent(ZOOM_LEVEL, 1));
+        this.animation = animation;
         this.animation.frames.forEach(frame => {
-            // paperAni.layers.push(this.createLayer(frame));
+            // this.paperAni.layers.push(this.createLayer(frame));
+            this.createLayer(frame);
         });
-        this.createPaths();
-        // paperAni.layers[0].visible = true;
-        this.sharedService.setAnimation(paperAni);
+        paper.project.layers[this.animation.current_frame].activate();
+        paper.project.layers[this.animation.current_frame].visible = true;
+        // this.paperAni.layers[this.animation.current_frame].visible = true;
+        // this.sharedService.setPaperAnimation(this.paperAni);
         this.status = 'loaded';
-        // paper.project.view.update();
+        paper.project.view.update();
+        console.log('Took ', performance.now() - start );
     }
 
-    private values = {
-        paths    : 50,
-        minPoints: 5,
-        maxPoints: 15,
-        minRadius: 30,
-        maxRadius: 90
-    };
-
-    createPaths() {
-        let center = new paper.Point(600, 600);
-        let layer  = new paper.Layer();
-        layer.activate();
-        let radiusDelta = this.values.maxRadius - this.values.minRadius;
-        let pointsDelta = this.values.maxPoints - this.values.minPoints;
-        for (let i = 0; i < this.values.paths; i++) {
-            let radius       = this.values.minRadius + Math.random() * radiusDelta;
-            let points       = this.values.minPoints + Math.floor(Math.random() * pointsDelta);
-            let random       = paper.Point.random();
-            let randomCenter = new paper.Point(center.x * random.x, center.y * random.y);
-            console.log('Random ', radius);
-            let path         = this.createBlob(randomCenter, radius, points);
-            let lightness    = (Math.random() - 0.5) * 0.4 + 0.4;
-            let hue          = Math.random() * 360;
-            // path.fillColor   = '#dddddd'; // { hue: hue, saturation: 1, lightness: lightness };
-            path.strokeColor = 'red';
-        }
-        console.log(paper.project.activeLayer);
-    }
-
-    createBlob(center, maxRadius, points): paper.Path {
-        console.log('Blob', center);
-        let path    = new paper.Path();
-        // path.onMouseEnter = function(event) {
-        //     console.log('Me ', event);
-        //     event.target.selected = true;
-        // };
-        path.onMouseMove = function(event) {
-            paper.project.activeLayer.selected = false;
-            if (event.target)
-                event.target.selected = true;
-        };
-        path.closed = true;
-        for (let i = 0; i < points; i++) {
-            let delta = new paper.Point({
-                length: (maxRadius * 0.5) + (Math.random() * maxRadius * 0.5),
-                angle : (360 / points) * i
-            });
-            path.add(new paper.Point(delta.x + center.x, delta.y + center.y));
-        }
-        path.smooth();
-        return path;
-    }
-
-    createLaayer(frame: Frame): paper.Layer {
+    createLayer(frame: Frame): paper.Layer {
         let layer = new paper.Layer();
+        let that  = this;
         layer.activate();
-        layer.visible      = false;
-        let path, segment;
-        layer.onMouseMove  = function (event) {
-            path = segment = undefined;
-            // console.log('Move event', event.event.buttons);
-            let hitResult                      = project.hitTest(event.point, this.hitOptions);
-            paper.project.activeLayer.selected = false;
-            if (hitResult && hitResult.item)
-                hitResult.item.selected = true;
-        };
-        layer.onMouseDown  = function (event) {
-            // console.log('Down event');
-            let hitResult                      = project.hitTest(event.point, this.hitOptions);
-            paper.project.activeLayer.selected = false;
-            if (hitResult && hitResult.item)
-                hitResult.item.selected = true;
-            console.log('hr ', hitResult);
-            if (event.modifiers.shift) {
-                if (hitResult.type == 'segment') {
-                    hitResult.segment.remove();
-                }
-                return;
-            }
-
-            if (hitResult) {
-                path = hitResult.item;
-                if (hitResult.type == 'segment') {
-                    segment = hitResult.segment;
-                } else if (hitResult.type == 'stroke') {
-                    let location = hitResult.location;
-                    segment      = path.insert(location.index + 1, event.point);
-                    // path.smooth();
-                }
-                hitResult.item.bringToFront();
-            }
-        };
-        layer.onMouseDown  = function (event) {
-            // console.log('Drag event');
-            if (segment) {
-                segment.point += event.delta;
-                // path.smooth();
-            } else if (path) {
-                path.position += event.delta;
-            }
-
-        };
-        layer.onMouseEnter = function (event) {
-            // console.log('Enter event ', event.event.target);
-        };
-        layer.onMouseLeave = function (event) {
-            // console.log('Leave event ', event.event.target);
-        };
-        layer.onMouseUp    = function (event) {
-            // console.log('Up event ', event.event.target);
-        };
-        layer.onClick      = function (event) {
-            // console.log('Click event ', event.event.target);
-        };
-
-        // layer.on('mousedown' | 'mouseup' | 'mousedrag' | 'mousemove' | 'keydown' | 'keyup', (event) => {
-        //     console.log('On event ', event.event.target);
-        // });
-        frame.segments.forEach(segment => {
-            let color: number[]  = segment.color;
+        layer.visible = false;
+        layer.data.id = frame.id;
+        frame.paths.forEach(segment => {
             let path: paper.Path = new paper.Path();
-            path.name            = segment.name;
-            path.type            = 'path';
-            path.strokeColor     = new paper.Color(color[0], color[1], color[2]);
-            path.strokeWidth     = 5;
-            path.strokeCap       = 'square';
-            path.closed          = true;
+            let color: number[]  = segment.color;
             segment.coordinates.forEach(coordinate => {
-                let point = new paper.Point(this.convert(coordinate[0]), this.convert(coordinate[1]));
+                let point = new paper.Point(this.convertUpCoordinate(coordinate[0]), this.convertUpCoordinate(coordinate[1]));
                 path.add(point);
             });
+            // path.data.id = segment.id;
+            path.strokeColor = new paper.Color(color[0], color[1], color[2]);
+            path.strokeWidth = 1;
+            path.strokeCap   = 'square';
+
+            path.closed      = segment.closed;
+            path.onMouseMove = function (event: any) {
+                that.toolHandler.onMouseMovePaperObject(event);
+            };
         });
         return layer;
     }
 
-    convert(nr: number) {
+    private setToolHandler(toolHandler: ToolHandler) {
+        this.toolHandler = toolHandler;
+        this.toolHandler.itemAdded().subscribe((path: paper.Path) => {
+            if (path) {
+                let colorStr = (path.strokeColor as any).toCSS(false).split(',');
+                let newPath      = {
+                    closed     : path.closed,
+                    color      : [
+                        Number(colorStr[0].substring(4)),
+                        Number(colorStr[1]),
+                        Number(colorStr[2].substring(0, colorStr[2].length - 1))],
+                    coordinates: []
+                };
+                path.segments.forEach(segment => {
+                    let coordinate: number[] = [];
+                    coordinate.push(this.convertDownCoordinate(segment.point.x));
+                    coordinate.push(this.convertDownCoordinate(segment.point.y));
+                    newPath.coordinates.push(coordinate);
+                });
+                this.animation.frames[0].paths.push(newPath);
+                // this.animationService.saveAnimation(this.animation).subscribe();
+            }
+        });
+        this.toolHandler.itemUpdated().subscribe((path: paper.Path) => {
+           if (path) {
+               console.log('Updated ', path);
+               console.log('Active ', paper.project.activeLayer.children);
+           }
+        });
+    }
+
+    convertUpCoordinate(nr: number): number {
         return (nr + 32768) / 100;
     }
 
+    convertDownCoordinate(nr: number): number {
+        return (nr * 100) - 32768;
+    }
+
+    private zoomDown(): void {
+        if (paper.view.zoom > 0.4) {
+            paper.view.zoom = paper.view.zoom - 0.1;
+        }
+    }
+
+    private zoomUp() {
+        if (paper.view.zoom < 4) {
+            paper.view.zoom = paper.view.zoom + 0.1;
+        }
+    }
+
+    private switchLayers(currentFrame: number, newFrame: number) {
+        console.log(paper.project);
+        paper.project.layers[newFrame].visible     = true;
+        (paper.project as any)._activeLayer = paper.project.layers[newFrame];
+        paper.project.layers[currentFrame].visible     = false;
+        paper.project.activeLayer.activate();
+        paper.project.activeLayer.visible = true;
+        this.animation.current_frame = newFrame;
+        paper.view.update();
+        // console.log(paper.project.activeLayer);
+    }
 }

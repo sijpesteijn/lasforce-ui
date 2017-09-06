@@ -31,14 +31,15 @@ import '../styles/headings.css';
 import { LasforceHeaderComponent } from './lasforce-header/lasforce-header.component';
 import { NavigationComponent } from './navigation/navigation.component';
 import { SettingsService } from './settings.service';
-import { PlayerComponent } from './player/player.component';
 import { AuthGuard } from './security/authguard';
 import { AuthenticationService } from './security/authenticate.service';
 import { LoginComponent } from './login/login.component';
 import { TranslateI18NextModule } from 'angular2-i18next';
 import { LanguageDetectorService } from './i18n/language.detector.service';
 import { CustomTreeNodeComponent } from './tree-node/tree-node.component';
-import { PopoverModule } from 'ng2-bootstrap';
+import { HistoryService } from './history/history.service';
+import { BsDropdownModule } from 'ngx-bootstrap';
+import { DragulaModule } from 'ng2-dragula';
 
 // Application wide providers
 const APP_PROVIDERS = [
@@ -84,7 +85,7 @@ if ('production' === ENV) {
         BrowserModule,
         FormsModule,
         HttpModule,
-        PopoverModule.forRoot(),
+        BsDropdownModule.forRoot(),
         RouterModule.forRoot(ROUTES, { useHash: true, preloadingStrategy: PreloadAllModules })
     ],
     providers   : [ // expose our Services and Providers into Angular's dependency injection
@@ -94,6 +95,7 @@ if ('production' === ENV) {
         AuthGuard,
         AuthenticationService,
         AppEventService,
+        HistoryService,
         SettingsService,
         LanguageDetectorService,
         { provide: Window, useValue: window }

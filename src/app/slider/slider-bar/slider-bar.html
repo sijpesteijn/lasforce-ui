@@ -1,0 +1,22 @@
+<div #sliderBar class="ui-slider-bar"
+     (mousedown)="mouseDown($event)"
+     (mousemove)="mouseMove($event)"
+     (mouseup)="mouseUp($event)"
+     (mouseleave)="mouseUp($event)">
+</div>
+<div #sliderHandleLeft class="ui-slider-handle ui-slider-leftHandle"
+     (mousedown)="mouseDown($event)"
+     (mouseup)="mouseUp($event)">
+</div>
+<div #sliderHandleRight class="ui-slider-handle ui-slider-rightHandle"
+     (mousedown)="mouseDown($event)"
+     (mouseup)="mouseUp($event)">
+</div>
+<div #sliderLableLeft class="ui-slider-label ui-slider-leftLabel">
+    <div>{{ sliderBarConfig.start }}</div>
+    <div class="ui-slider-label-inner"></div>
+</div>
+<div #sliderLableRight class="ui-slider-label ui-slider-rightLabel">
+    <div>{{ sliderBarConfig.end }}</div>
+    <div class="ui-slider-label-inner"></div>
+</div>

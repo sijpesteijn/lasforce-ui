@@ -1,4 +1,5 @@
 import { GridConfig } from './gridconfig';
+import { Control } from './control.component';
 
 
 export interface WidgetGridConfig {
@@ -8,7 +9,9 @@ export interface WidgetGridConfig {
 }
 
 export interface WidgetMetadata {
+    title: string;
     component: any;
+    controls: Control[];
     widgetGridConfig: WidgetGridConfig;
 }
 
